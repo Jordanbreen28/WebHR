@@ -1,20 +1,31 @@
+<x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Add Shift') }}
+        </h2>
+    </x-slot>
 <x-jet-form-section submit="createShift">
-    @csrf_token
     <x-slot name="title">
     <x-slot name="description">
     <x-slot name="form">
         <!-- Name -->
-        <div class="col-span-6 sm:col-span-4">
+    <div class="col-span-6 sm:col-span-4">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Add new shifts') }}
     </h2>
     <div class="col-span-6 sm:col-span-4">
     <h1 class="font-semibold text-sml text-gray-800 leading-tight">
-        {{ __('Add a new shift for an employee. Please be mindful that employees will an receive email notification upon submission.') }}
+        {{ __('Add a new shift for an employee. Please be mindful that the employee will an receive email notification upon submission.') }}
     </h1>
 </div>
+<div class="p-3">
+</div>
+@if (session()->has('message'))
+            <div id="alert" class="p-3 bg-green-300 text-white-200 rounded shadow-sm" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)">
+                {{ session('message') }}
+            </div>
+            <div class="p-3"></div>
+@endif
             <x-jet-label for="name" value="Employee" />
-            <x-jet-input-error for="name" class="mt-2" />
+            <x-jet-input-error for="name" class="mt-2" required="true"/>
             <select class="form-control" wire:model="employee"  name="employee" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name">
                     <option value="" selected>Choose employee</option>
                     @foreach($employees as $employee)
@@ -54,4 +65,4 @@
     </x-slot>
     </x-slot>
     </x-slot>
-    </x-jet-form-section>
+</x-form-section>

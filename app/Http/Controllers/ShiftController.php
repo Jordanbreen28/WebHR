@@ -3,47 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use DB;
-use App\Models\ShiftTimes;
 use App\Models\User;
-use Carbon\Carbon;
+use App\Models\Shifts;
+use Illuminate\Support\Facades\Auth;
 
-
-class ShiftTimeController extends Controller
+class ShiftController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+     
     public function index()
-    {
-        //retrieve current user ID
-        $user_id = Auth::id();
-        //retrieve current date, store in variable
-        $currentDate = date("Y-m-d");
-        //store query as variable, check that userID = current user ID and date = Current date 
-        $results = ['user_id' => $user_id, 'shift_date' => $currentDate];
-        //Run query in Shift Times table, return the results
-        $shift_times = ShiftTimes::where($results)->get();
-
-        return view('shift-times', compact('shift_times'));
+    {   
+        $user_id = Auth::id();    
+        $shifts = Shifts::all()->where('user_id', $user_id);
+        return view('shift-times', compact('shifts'));
     }
 
-    public function create()
-    {
-        
-    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function recordTime(Request $request, $id)
-    {
-        
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -62,9 +45,10 @@ class ShiftTimeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getShift($id)
     {
-        //
+        $user_id = Auth::id();
+        $shift = Shifts::find($id)->where('user_id', $user_id);
     }
 
     /**
@@ -75,7 +59,7 @@ class ShiftTimeController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -87,7 +71,7 @@ class ShiftTimeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        //
     }
 
     /**
